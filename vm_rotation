@@ -1,0 +1,62 @@
+#!/usr/bin/env python3
+import logging
+import sys
+import time
+
+import libvirt
+from systemd.journal import JournalHandler
+
+# Change these two variables accordingly
+VFIO_VM_NAME = ""
+IDLE_VM_NAME = ""
+
+logger = logging.getLogger()
+logger.addHandler(JournalHandler())
+logger.setLevel(logging.INFO)
+
+try:
+    conn = libvirt.open("qemu:///system")
+except libvirt.libvirtError:
+    logger.error("Failed to open connection to the hypervisor")
+    sys.exit(1)
+
+try:
+    vfio_vm = conn.lookupByName(VFIO_VM_NAME)
+except libvirt.libvirtError as e:
+    logger.error(e)
+    sys.exit(1)
+
+try:
+    idle_vm = conn.lookupByName(IDLE_VM_NAME)
+except libvirt.libvirtError as e:
+    logger.error(e)
+    sys.exit(1)
+
+boot_vfio_next = False
+
+
+while True:
+    # See https://libvirt.org/html/libvirt-libvirt-domain.html#virDomainState for the meaning
+    # of state values
+    # state() returns `state` and `reason`, only the former is useful to us
+
+    vfio_vm_state = vfio_vm.state()[0]
+    idle_vm_state = idle_vm.state()[0]
+
+    if vfio_vm_state == 5 and idle_vm_state == 5:
+        try:
+            # If both VMs are shutdown, boot the next VM in the rotation
+            if boot_vfio_next:
+                vfio_vm.create()
+            else:
+                idle_vm.create()
+            boot_vfio_next = not boot_vfio_next
+        except libvirt.libvirtError as e:
+            logger.error(e)
+    # Assume that both VMs cannot be up at the same time
+    elif vfio_vm_state == 1:
+        boot_vfio_next = False
+    elif idle_vm_state == 1:
+        boot_vfio_next = True
+
+    time.sleep(5)
