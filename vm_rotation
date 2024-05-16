@@ -4,15 +4,13 @@ import sys
 import time
 
 import libvirt
-from systemd.journal import JournalHandler
 
 # Change these two variables accordingly
 VFIO_VM_NAME = ""
 IDLE_VM_NAME = ""
 
-logger = logging.getLogger()
-logger.addHandler(JournalHandler())
-logger.setLevel(logging.INFO)
+logger = logging.getLogger(__name__)
+logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 try:
     conn = libvirt.open("qemu:///system")
@@ -36,10 +34,10 @@ boot_vfio_next = False
 
 
 while True:
-    # See https://libvirt.org/html/libvirt-libvirt-domain.html#virDomainState for the meaning
-    # of state values
-    # state() returns `state` and `reason`, only the former is useful to us
+    # See https://libvirt.org/html/libvirt-libvirt-domain.html#virDomainState
+    # for the meaning of state values
 
+    # state() returns `state` and `reason`, only the former is useful to us
     vfio_vm_state = vfio_vm.state()[0]
     idle_vm_state = idle_vm.state()[0]
 
