@@ -1,12 +1,14 @@
 ## Description
 
-A Python service boot the VFIO gaming VM after the idle VM is shut off, and vice versa.
+A Python service that boots the VFIO gaming VM after the idle VM is shut off, and vice versa.
+
+Note: This has been tested on a Fedora 40 system only, use at your own risk!
 
 ## Prerequisites  
 
 - systemd, libvirt (+QEMU/KVM), a VFIO gaming VM and a idle VM
 - Python 3.11 or up
-- `libvirt-python` (You should install this with your distro's package manager)
+- `libvirt-python` (e.g. `dnf install libvirt-python` in Fedora)
 
 ## Usage
 
@@ -32,7 +34,3 @@ Run the following with root:
 1. `systemctl disable --now vfio-vm-rotation`
 2. `rm -rf /opt/vfio-vm-rotation`
 3. `rm /etc/systemd/system/vfio-vm-rotation.service`
-
-## TODO
-
-Rewrite this in C
