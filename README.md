@@ -13,7 +13,7 @@ A Python service boot the VFIO gaming VM after the idle VM is shut off, and vice
 ## Usage
 
 1. Clone this repo
-2. Add these two items under `[Service]` in [vfio-vm-rotation.service](./vfio-vm-rotation.service):
+2. **IMPORTANT:** Add these two items under `[Service]` in [vfio-vm-rotation.service](./vfio-vm-rotation.service):
 
     ```
     # Change the values below accordingly
