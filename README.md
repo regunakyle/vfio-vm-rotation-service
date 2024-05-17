@@ -11,12 +11,14 @@ A Python service boot the VFIO gaming VM after the idle VM is shut off, and vice
 ## Usage
 
 1. Clone this repo
-2. **IMPORTANT:** Add these two items under `[Service]` in [vfio-vm-rotation.service](./vfio-vm-rotation.service):
+2. **IMPORTANT:** Add these items under `[Service]` in [vfio-vm-rotation.service](./vfio-vm-rotation.service):
 
     ```
     # Change the values below accordingly
     Environment="VFIO_VM_NAME=<Name of your VFIO VM>"
     Environment="IDLE_VM_NAME=<Name of your idle VM>"
+    # Optional: Default to "qemu:///system" if not set
+    # Environment="CONNECTION_URI=<Name of your idle VM>"
     ```
 
 3. Run (with root) [install.sh](./install.sh)
