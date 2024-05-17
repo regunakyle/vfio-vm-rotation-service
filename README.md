@@ -1,5 +1,3 @@
-# Python script for rotating between two VMs (for VFIO)
-
 ## Description
 
 A Python service boot the VFIO gaming VM after the idle VM is shut off, and vice versa.

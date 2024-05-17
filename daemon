@@ -14,7 +14,7 @@ logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 if VFIO_VM_NAME is None or IDLE_VM_NAME is None:
     logger.error(
-        f"The following variable(s) are not set: {'VFIO_VM_NAME' if VFIO_VM_NAME is None else ''} {'IDLE_VM_NAME' if IDLE_VM_NAME is None else ''}"
+        f"The following variable(s) are not set:{' VFIO_VM_NAME' if VFIO_VM_NAME is None else ''} {' IDLE_VM_NAME' if IDLE_VM_NAME is None else ''}"
     )
     sys.exit(1)
 
