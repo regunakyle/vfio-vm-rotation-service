@@ -1,5 +1,5 @@
 [Unit]
-Description=(VFIO) Bring up one VM when another is down 
+Description=C program for rotating between two VMs 
 After=libvirtd.service
 
 [Service]
