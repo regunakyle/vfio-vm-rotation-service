@@ -1,7 +1,10 @@
 all:
+	@echo "Compiling the program..."
 	gcc daemon.c -lvirt -o daemon
 
 install: all
+	@echo ""
+
 	@grep -Fq 'Environment="VFIO_VM_NAME=' vfio-vm-rotation.service || \
 	(echo 'ERROR: Please set `VFIO_VM_NAME` environment variable in vfio-vm-rotation.service, then try again.' && exit 1)
 
@@ -13,11 +16,11 @@ install: all
 	cp daemon /opt/vfio-vm-rotation/
 	chmod u+x /opt/vfio-vm-rotation/daemon
 
-	@echo "" ; echo "Installing systemd service..."
+	@echo "" ; echo "Installing the systemd service..."
 	cp vfio-vm-rotation.service /etc/systemd/system
 	systemctl enable --now vfio-vm-rotation
 
-	@echo "" ; echo "Install finished!"
+	@echo "" ; echo "Installation finished!"
 
 uninstall:
 	@echo "Disabling and deleting the service..."
@@ -28,4 +31,3 @@ uninstall:
 	rm -rf /opt/vfio-vm-rotation
 
 	@echo "" ; echo "Uninstallation finished!"
-	
