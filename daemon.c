@@ -33,13 +33,15 @@ int main(void)
     virDomainPtr vfio_vm = NULL;
     if (!(vfio_vm = virDomainLookupByName(conn, VFIO_VM_NAME)))
     {
-        syslog(LOG_ERR, "Unable to find VM '%s'", VFIO_VM_NAME);
+        syslog(LOG_ERR, "Unable to find VFIO VM '%s'", VFIO_VM_NAME);
+        return EXIT_FAILURE;
     }
 
     virDomainPtr idle_vm = NULL;
     if (!(idle_vm = virDomainLookupByName(conn, IDLE_VM_NAME)))
     {
-        syslog(LOG_ERR, "Unable to find VM '%s'", IDLE_VM_NAME);
+        syslog(LOG_ERR, "Unable to find idle VM '%s'", IDLE_VM_NAME);
+        return EXIT_FAILURE;
     }
 
     bool boot_vfio_next = false;
