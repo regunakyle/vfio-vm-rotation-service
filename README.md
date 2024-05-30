@@ -1,8 +1,20 @@
 ## Description
 
-C program that boots the VFIO gaming VM after the idle VM is shut off, and vice versa.
+Systemd service (written in C) that boots the VFIO gaming VM after the idle VM is shut off, and vice versa.
 
 Note: This has been tested on a Fedora 40 system only, use at your own risk!
+
+## Why is this needed?
+
+The [VFIO Discord](https://discord.com/invite/f63cXwH) suggests always bind the GPU to any VM (because this might save power).
+
+One approach to implement this is to boot the idle VM after the VFIO VM shuts down (and vice versa).
+
+You cannot use QEMU hooks to do this, as calling `virsh` in a hook script will lead to race condition.
+
+Systemd service is a viable alternative, so I wrote one myself.
+
+Please refer to the `wiki-and-psa` channel in the [VFIO Discord](https://discord.com/invite/f63cXwH) for further power saving settings that should be implemented inside the idle VM.
 
 ## Prerequisites  
 
@@ -28,7 +40,3 @@ Note: This has been tested on a Fedora 40 system only, use at your own risk!
 ## Uninstall
 
 Run (with root) `make uninstall`
-
-## Note
-
-You can find the Python version of this program in the `python_version` branch. (It eats up about 2x amount of RAM though)
