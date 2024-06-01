@@ -16,14 +16,17 @@ ifneq ("$(wildcard /etc/systemd/system/vfio-vm-rotation.service)","")
 	systemctl disable --now vfio-vm-rotation
 endif
 
-	@echo "Installing the binary..."
+	@echo "" ; echo "Installing the binary..."
 	mkdir -p /opt/vfio-vm-rotation/
-	mv daemon /opt/vfio-vm-rotation/
+	cp daemon /opt/vfio-vm-rotation/
 	chmod u+x /opt/vfio-vm-rotation/daemon
 
 	@echo "" ; echo "Installing the systemd service..."
 	cp vfio-vm-rotation.service /etc/systemd/system
 	systemctl enable --now vfio-vm-rotation
+
+	@echo "" ; echo "Cleaning up..."
+	rm daemon
 
 	@echo "" ; echo "Installation finished!"
 
