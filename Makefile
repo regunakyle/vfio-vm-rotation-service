@@ -11,9 +11,14 @@ install: all
 	@grep -Fq 'Environment="IDLE_VM_NAME=' vfio-vm-rotation.service || \
 	(echo 'ERROR: Please set `IDLE_VM_NAME` environment variable in vfio-vm-rotation.service, then try again.' && exit 1)
 
+	@echo "Disable the service if it already exists..."
+ifneq ("$(wildcard /etc/systemd/system/vfio-vm-rotation.service)","")
+	systemctl disable --now vfio-vm-rotation
+endif
+
 	@echo "Installing the binary..."
 	mkdir -p /opt/vfio-vm-rotation/
-	cp daemon /opt/vfio-vm-rotation/
+	mv daemon /opt/vfio-vm-rotation/
 	chmod u+x /opt/vfio-vm-rotation/daemon
 
 	@echo "" ; echo "Installing the systemd service..."
