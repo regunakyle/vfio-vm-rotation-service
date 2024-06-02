@@ -44,13 +44,12 @@ int main(void)
         return EXIT_FAILURE;
     }
 
-    bool boot_vfio_next = false;
-
     syslog(LOG_INFO, "Service started.");
 
+    bool boot_vfio_next = false;
     int vfio_vm_state;
     int idle_vm_state;
-    int dummy;
+    int reason;
 
     for (;;)
     {
@@ -60,8 +59,8 @@ int main(void)
          */
 
         // virDomainGetState() produces `state` and `reason`, only the former is useful to us
-        virDomainGetState(vfio_vm, &vfio_vm_state, &dummy, 0);
-        virDomainGetState(idle_vm, &idle_vm_state, &dummy, 0);
+        virDomainGetState(vfio_vm, &vfio_vm_state, &reason, 0);
+        virDomainGetState(idle_vm, &idle_vm_state, &reason, 0);
 
         if (vfio_vm_state == 5 && idle_vm_state == 5)
         {
