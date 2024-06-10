@@ -6,9 +6,9 @@ Note: This has been tested on a Fedora 40 system only, use at your own risk!
 
 ## Why is this needed?
 
-The [VFIO Discord](https://discord.com/invite/f63cXwH) suggests always bind the GPU to any VM (because this might save power).
+The [VFIO Discord](https://discord.com/invite/f63cXwH) suggests always bind your gaming GPU to proprietary driver (because they save more power than `vfio-pci`).
 
-One approach to implement this is to boot the idle VM after the VFIO VM shuts down (and vice versa).
+One approach to this is to create a low resource "idle VM", attach the GPU to it and install proprietary driver inside. Boot the idle VM after the VFIO VM shuts down (and vice versa).
 
 You cannot use QEMU hooks to do this, as calling `virsh` in a hook script will lead to race condition.
 
@@ -19,7 +19,7 @@ Please refer to the `wiki-and-psa` channel in the [VFIO Discord](https://discord
 ## Prerequisites  
 
 - systemd, libvirt (+QEMU/KVM), a VFIO gaming VM and a idle VM
-- libvirt C library (e.g. `dnf install libvirt-devel` in Fedora)
+- libvirt C library (e.g. `sudo dnf install libvirt-devel` in Fedora)
 - `gcc`
 
 ## Usage
