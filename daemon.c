@@ -9,7 +9,7 @@ int main(void)
     const char *VFIO_VM_NAME = getenv("VFIO_VM_NAME");
     const char *IDLE_VM_NAME = getenv("IDLE_VM_NAME");
 
-    const char *CONNECTION_URI = getenv("IDLE_VM_NAME");
+    const char *CONNECTION_URI = getenv("CONNECTION_URI");
 
     if (!CONNECTION_URI)
     {
@@ -24,9 +24,9 @@ int main(void)
 
     virConnectPtr conn = NULL;
 
-    if (!(conn = virConnectOpen("qemu:///system")))
+    if (!(conn = virConnectOpen(CONNECTION_URI)))
     {
-        syslog(LOG_ERR, "Failed to connect to hypervisor.");
+        syslog(LOG_ERR, "Failed to connect to the hypervisor.");
         return EXIT_FAILURE;
     }
 
