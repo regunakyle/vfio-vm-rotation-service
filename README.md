@@ -10,7 +10,7 @@ The [VFIO Discord](https://discord.com/invite/f63cXwH) suggests always bind your
 
 One approach to this is to create a low resource "idle VM", attach the GPU to it and install proprietary driver inside. Boot the idle VM after the VFIO VM shuts down (and vice versa).
 
-You cannot use QEMU hooks to do this, as calling `virsh` in a hook script will lead to race condition.
+You cannot use QEMU hooks to do this, as calling `virsh` in a hook script will lead to deadlock.
 
 Systemd service is a viable alternative, so I wrote one myself.
 
