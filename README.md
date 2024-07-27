@@ -32,7 +32,7 @@ Please refer to the `wiki-and-psa` channel in the [VFIO Discord](https://discord
     Environment="VFIO_VM_NAME=<Name of your VFIO VM>"
     Environment="IDLE_VM_NAME=<Name of your idle VM>"
     # Optional: Default to "qemu:///system" if not set
-    # Environment="CONNECTION_URI=<Name of your idle VM>"
+    # Environment="CONNECTION_URI=<Connection URI of libvirt>"
     ```
 
 3. Run `sudo make install`
