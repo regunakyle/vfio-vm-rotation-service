@@ -20,7 +20,7 @@ Please refer to the `wiki-and-psa` channel in the [VFIO Discord](https://discord
 
 - systemd, libvirt (+QEMU/KVM), a VFIO gaming VM and a idle VM
 - libvirt C library (e.g. `sudo dnf install libvirt-devel` in Fedora)
-- `gcc`
+- `gcc`, `make`
 
 ## Usage
 
