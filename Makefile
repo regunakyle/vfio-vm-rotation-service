@@ -2,6 +2,10 @@ all:
 	@echo "Compiling the program..."
 	gcc daemon.c -lvirt -o daemon
 
+static:
+	@echo "Compiling the program with statically linked libvirt..."
+	gcc daemon.c -l:libvirt.so -o daemon
+
 install: all
 	@echo ""
 
