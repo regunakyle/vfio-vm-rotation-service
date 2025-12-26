@@ -6,7 +6,10 @@ After=libvirtd.service
 Type=simple
 Restart=always
 RestartSec=5
+ExecStartPre=/usr/bin/sleep 10
 ExecStart=/opt/vfio-vm-rotation/daemon
+Environment="VFIO_VM_NAME=vfio-win10"
+Environment="IDLE_VM_NAME=vfio-fedora"
 
 [Install]
 WantedBy=multi-user.target
